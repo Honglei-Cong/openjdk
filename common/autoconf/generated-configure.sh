@@ -4123,7 +4123,7 @@ VALID_TOOLCHAINS_all="gcc clang solstudio xlc microsoft"
 # These toolchains are valid on different platforms
 VALID_TOOLCHAINS_linux="gcc clang"
 VALID_TOOLCHAINS_solaris="solstudio"
-VALID_TOOLCHAINS_macosx="gcc clang"
+VALID_TOOLCHAINS_macosx="clang gcc"
 VALID_TOOLCHAINS_aix="xlc"
 VALID_TOOLCHAINS_windows="microsoft"
 
@@ -4336,7 +4336,7 @@ VS_SDK_PLATFORM_NAME_2017=
 #CUSTOM_AUTOCONF_INCLUDE
 
 # Do not change or remove the following line, it is needed for consistency checks:
-DATE_WHEN_GENERATED=1532008852
+DATE_WHEN_GENERATED=1535545082
 
 ###############################################################################
 #
@@ -26663,7 +26663,7 @@ fi
     fi
 
     # Fail-fast: verify we're building on Xcode 4, we cannot build with Xcode 5 or later
-    XCODE_VERSION=`$XCODEBUILD -version | grep '^Xcode ' | sed 's/Xcode //'`
+    XCODE_VERSION="4.0"
     XC_VERSION_PARTS=( ${XCODE_VERSION//./ } )
     if test ! "${XC_VERSION_PARTS[0]}" = "4"; then
       as_fn_error $? "Xcode 4 is required to build JDK 8, the version found was $XCODE_VERSION. Use --with-xcode-path to specify the location of Xcode 4 or make Xcode 4 active by using xcode-select." "$LINENO" 5
@@ -27827,8 +27827,8 @@ $as_echo "$as_me: The result from running it was: \"$COMPILER_VERSION_OUTPUT\"" 
     # Check that this is likely to be GCC.
     $ECHO "$COMPILER_VERSION_OUTPUT" | $GREP "Free Software Foundation" > /dev/null
     if test $? -ne 0; then
-      { $as_echo "$as_me:${as_lineno-$LINENO}: The $COMPILER_NAME compiler (located as $COMPILER) does not seem to be the required $TOOLCHAIN_TYPE compiler." >&5
-$as_echo "$as_me: The $COMPILER_NAME compiler (located as $COMPILER) does not seem to be the required $TOOLCHAIN_TYPE compiler." >&6;}
+      { $as_echo "$as_me:${as_lineno-$LINENO}: The $COMPILER_NAME compiler (located as $COMPILER) does not seem to be the required $TOOLCHAIN_TYPE $DEFAULT_TOOLCHAIN compiler." >&5
+$as_echo "$as_me: The $COMPILER_NAME compiler (located as $COMPILER) does not seem to be the required $TOOLCHAIN_TYPE $DEFAULT_TOOLCHAIN compiler." >&6;}
       { $as_echo "$as_me:${as_lineno-$LINENO}: The result from running with --version was: \"$COMPILER_VERSION\"" >&5
 $as_echo "$as_me: The result from running with --version was: \"$COMPILER_VERSION\"" >&6;}
       as_fn_error $? "A $TOOLCHAIN_TYPE compiler is required. Try setting --with-tools-dir." "$LINENO" 5
@@ -29879,25 +29879,25 @@ ac_compiler_gnu=$ac_cv_cxx_compiler_gnu
 
 
 
-  if test "x$CC_VERSION" != "x$CXX_VERSION"; then
-    { $as_echo "$as_me:${as_lineno-$LINENO}: WARNING: C and C++ compiler has different version numbers, $CC_VERSION vs $CXX_VERSION." >&5
-$as_echo "$as_me: WARNING: C and C++ compiler has different version numbers, $CC_VERSION vs $CXX_VERSION." >&2;}
+  if test "x$CC_VERSION_NUMBER" != "x$CXX_VERSION_NUMBER"; then
+    { $as_echo "$as_me:${as_lineno-$LINENO}: WARNING: C and C++ compiler has different version numbers, $CC_VERSION_NUMBER vs $CXX_VERSION_NUMBER." >&5
+$as_echo "$as_me: WARNING: C and C++ compiler has different version numbers, $CC_VERSION_NUMBER vs $CXX_VERSION_NUMBER." >&2;}
     { $as_echo "$as_me:${as_lineno-$LINENO}: WARNING: This typically indicates a broken setup, and is not supported" >&5
 $as_echo "$as_me: WARNING: This typically indicates a broken setup, and is not supported" >&2;}
   fi
 
-  # We only check CC_VERSION since we assume CXX_VERSION is equal.
-  if  [[ "$CC_VERSION" =~ (.*\.){3} ]] ; then
+  # We only check CC_VERSION_NUMBER since we assume CXX_VERSION_NUMBER is equal.
+  if  [[ "$CC_VERSION_NUMBER" =~ (.*\.){3} ]] ; then
     { $as_echo "$as_me:${as_lineno-$LINENO}: WARNING: C compiler version number has more than three parts (X.Y.Z): $CC_VERSION. Comparisons might be wrong." >&5
 $as_echo "$as_me: WARNING: C compiler version number has more than three parts (X.Y.Z): $CC_VERSION. Comparisons might be wrong." >&2;}
   fi
 
-  if  [[  "$CC_VERSION" =~ [0-9]{6} ]] ; then
+  if  [[  "$CC_VERSION_NUMBER" =~ [0-9]{6} ]] ; then
     { $as_echo "$as_me:${as_lineno-$LINENO}: WARNING: C compiler version number has a part larger than 99999: $CC_VERSION. Comparisons might be wrong." >&5
 $as_echo "$as_me: WARNING: C compiler version number has a part larger than 99999: $CC_VERSION. Comparisons might be wrong." >&2;}
   fi
 
-  COMPARABLE_ACTUAL_VERSION=`$AWK -F. '{ printf("%05d%05d%05d\n", $1, $2, $3) }' <<< "$CC_VERSION"`
+  COMPARABLE_ACTUAL_VERSION=`$AWK -F. '{ printf("%05d%05d%05d\n", $1, $2, $3) }' <<< "$CC_VERSION_NUMBER"`
 
 
   #
@@ -40504,7 +40504,7 @@ $as_echo "$tool_specified" >&6; }
         -d \"JDK_BUILD_ID=\$(FULL_VERSION)\" \
         -d \"JDK_COMPANY=\$(COMPANY_NAME)\" \
         -d \"JDK_COMPONENT=\$(PRODUCT_NAME) \$(JDK_RC_PLATFORM_NAME) binary\" \
-        -d \"JDK_VER=\$(JDK_MINOR_VERSION).\$(JDK_MICRO_VERSION).\$(if \$(JDK_UPDATE_VERSION),\$(JDK_UPDATE_VERSION),0).\$(COOKED_BUILD_NUMBER)\" \
+        -d \"JDK_VER=\$(JDK_MINOR_VERSION).\$(JDK_MICRO_VERSION).\$(COOKED_JDK_UPDATE_VERSION).\$(COOKED_BUILD_NUMBER)\" \
         -d \"JDK_COPYRIGHT=Copyright \xA9 $COPYRIGHT_YEAR\" \
         -d \"JDK_NAME=\$(PRODUCT_NAME) \$(JDK_RC_PLATFORM_NAME) \$(JDK_MINOR_VERSION) \$(JDK_UPDATE_META_TAG)\" \
         -d \"JDK_FVER=\$(JDK_MINOR_VERSION),\$(JDK_MICRO_VERSION),\$(if \$(JDK_UPDATE_VERSION),\$(JDK_UPDATE_VERSION),0),\$(COOKED_BUILD_NUMBER)\""
