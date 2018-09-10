@@ -106,7 +106,6 @@ FileBuffRegion::~FileBuffRegion() {
 //------------------------------copy-------------------------------------------
 // Deep copy a FileBuffRegion
 FileBuffRegion *FileBuffRegion::copy() {
-  if( !this ) return NULL;      // The empty buffer region
   FileBuffRegion *br = new FileBuffRegion(_bfr,_sol,_line,_offset,_length);
   if( _next ) br->_next = _next->copy();
   return br;
@@ -119,7 +118,6 @@ FileBuffRegion *FileBuffRegion::copy() {
 // "sorted-merge" running in linear time.
 FileBuffRegion *FileBuffRegion::merge( FileBuffRegion *br ) {
   if( !br ) return this;        // Merging nothing
-  if( !this ) return br;        // Merging into nothing
 
   assert( _bfr == br->_bfr, "" );     // Check for pointer-equivalent buffers
 
@@ -241,7 +239,6 @@ ostream& operator<< ( ostream& os, FileBuffRegion &br ) {
 // underlined.  Ellipses are used for long multi-line regions.
 //void FileBuffRegion::print( std::ostream& os ) {
 void FileBuffRegion::print( ostream& os ) {
-  if( !this ) return;           // Nothing to print
   char *s = _bfr->get_line();
   int skip = (int)(_offset - _sol);     // Amount to skip to start of data
   int len = printline( os, _bfr->_fp->_name, _line, s, skip, _length );

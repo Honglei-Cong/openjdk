@@ -324,7 +324,8 @@ inline int Node::Init(int req, Compile* C) {
 //------------------------------Node-------------------------------------------
 // Create a Node, with a given number of required edges.
 Node::Node(uint req)
-  : _idx(IDX_INIT(req))
+  : _out(NULL)
+  , _idx(IDX_INIT(req))
 #ifdef ASSERT
   , _parse_idx(_idx)
 #endif
@@ -346,7 +347,8 @@ Node::Node(uint req)
 
 //------------------------------Node-------------------------------------------
 Node::Node(Node *n0)
-  : _idx(IDX_INIT(1))
+  : _out(NULL)
+  , _idx(IDX_INIT(1))
 #ifdef ASSERT
   , _parse_idx(_idx)
 #endif
@@ -361,7 +363,8 @@ Node::Node(Node *n0)
 
 //------------------------------Node-------------------------------------------
 Node::Node(Node *n0, Node *n1)
-  : _idx(IDX_INIT(2))
+  : _out(NULL)
+  , _idx(IDX_INIT(2))
 #ifdef ASSERT
   , _parse_idx(_idx)
 #endif
@@ -378,7 +381,8 @@ Node::Node(Node *n0, Node *n1)
 
 //------------------------------Node-------------------------------------------
 Node::Node(Node *n0, Node *n1, Node *n2)
-  : _idx(IDX_INIT(3))
+  : _out(NULL)
+  , _idx(IDX_INIT(3))
 #ifdef ASSERT
   , _parse_idx(_idx)
 #endif
@@ -397,7 +401,8 @@ Node::Node(Node *n0, Node *n1, Node *n2)
 
 //------------------------------Node-------------------------------------------
 Node::Node(Node *n0, Node *n1, Node *n2, Node *n3)
-  : _idx(IDX_INIT(4))
+  : _out(NULL)
+  , _idx(IDX_INIT(4))
 #ifdef ASSERT
   , _parse_idx(_idx)
 #endif
@@ -418,7 +423,8 @@ Node::Node(Node *n0, Node *n1, Node *n2, Node *n3)
 
 //------------------------------Node-------------------------------------------
 Node::Node(Node *n0, Node *n1, Node *n2, Node *n3, Node *n4)
-  : _idx(IDX_INIT(5))
+  : _out(NULL)
+  , _idx(IDX_INIT(5))
 #ifdef ASSERT
   , _parse_idx(_idx)
 #endif
@@ -442,7 +448,8 @@ Node::Node(Node *n0, Node *n1, Node *n2, Node *n3, Node *n4)
 //------------------------------Node-------------------------------------------
 Node::Node(Node *n0, Node *n1, Node *n2, Node *n3,
                      Node *n4, Node *n5)
-  : _idx(IDX_INIT(6))
+  : _out(NULL)
+  , _idx(IDX_INIT(6))
 #ifdef ASSERT
   , _parse_idx(_idx)
 #endif
@@ -468,7 +475,8 @@ Node::Node(Node *n0, Node *n1, Node *n2, Node *n3,
 //------------------------------Node-------------------------------------------
 Node::Node(Node *n0, Node *n1, Node *n2, Node *n3,
                      Node *n4, Node *n5, Node *n6)
-  : _idx(IDX_INIT(7))
+  : _out(NULL)
+  , _idx(IDX_INIT(7))
 #ifdef ASSERT
   , _parse_idx(_idx)
 #endif
